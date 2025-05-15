@@ -1,26 +1,48 @@
+/* Variables globales para colores y otros valores */
+:root {
+    --primary-color: #ffc0cb;
+    --secondary-color: #d3d3d3;
+    --background-color: #f5f5f5;
+    --text-color: #333;
+    --hover-color: #ffb6c1;
+    --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --shadow-medium: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Reset básico para consistencia entre navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: #f5f5f5;
-    color: #333;
+    background: var(--background-color);
+    color: var(--text-color);
     text-align: center;
 }
+
 .landing {
-    background: linear-gradient(to bottom right, #ffc0cb, #d3d3d3);
+    background: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
     padding: 30px 20px;
 }
+
 .landing h1 {
     font-size: 2.5em;
     font-weight: 300;
     color: #fff;
 }
+
 .main-photo {
     width: 60%;
     max-width: 400px;
     margin-top: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow-light);
 }
+
 nav ul {
     list-style: none;
     display: flex;
@@ -29,14 +51,17 @@ nav ul {
     padding: 0;
     margin: 0;
 }
+
 nav li {
     padding: 15px 25px;
     cursor: pointer;
     transition: background 0.3s;
 }
+
 nav li:hover {
-    background: #ffb6c1;
+    background: var(--hover-color);
 }
+
 .tab {
     display: none;
     padding: 20px;
@@ -45,8 +70,24 @@ nav li:hover {
     margin: 10px auto;
     max-width: 600px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-medium);
 }
+
 .spotify-player {
     margin: 30px auto;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 600px) {
+    .main-photo {
+        width: 90%;
+    }
+
+    .landing h1 {
+        font-size: 2em;
+    }
+
+    nav li {
+        padding: 10px 15px;
+    }
 }
