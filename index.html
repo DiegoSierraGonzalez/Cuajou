@@ -10,7 +10,9 @@
             --secondary: #ffd6e0;
             --accent: #4c51c6;
             --bg: linear-gradient(135deg, #ffe5ec 0%, #b8c6db 100%);
+            --bg-dark: linear-gradient(135deg, #232946 0%, #4c51c6 100%);
             --text: #232946;
+            --text-dark: #f6f6f6;
             --white: #fff;
         }
         body {
@@ -19,17 +21,26 @@
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
+            transition: background 0.6s, color 0.5s;
+        }
+        body.dark {
+            background: var(--bg-dark);
+            color: var(--text-dark);
         }
         .landing {
             text-align: center;
             padding: 2.5rem 1rem 1.5rem 1rem;
+            animation: fadeIn 1.3s;
         }
         .landing h1 {
             font-size: 2.1rem;
-            letter-spacing: 1px;
             color: var(--primary);
             margin-bottom: 1rem;
             font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #ff477e 40%, #4c51c6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .main-photo {
             width: 150px;
@@ -39,6 +50,29 @@
             box-shadow: 0 8px 32px rgba(76, 81, 198, 0.08);
             object-fit: cover;
             background: var(--white);
+            transition: border 0.3s;
+        }
+        body.dark .main-photo {
+            border: 5px solid var(--accent);
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary);
+            border: none;
+            color: #fff;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            box-shadow: 0 2px 10px #ff477e33;
+            transition: background 0.3s;
+            z-index: 99;
+        }
+        .theme-toggle:hover {
+            background: var(--accent);
         }
         nav {
             display: flex;
@@ -62,8 +96,9 @@
             transition: background 0.2s, transform 0.18s;
             box-shadow: 0 2px 10px rgba(255, 71, 126, 0.07);
             font-size: 1.07rem;
+            user-select: none;
         }
-        nav li:hover {
+        nav li.active, nav li:hover {
             background: var(--accent);
             transform: translateY(-2px) scale(1.05);
         }
@@ -76,6 +111,15 @@
             box-shadow: 0 4px 18px rgba(44, 52, 99, 0.06);
             padding: 2rem 1.5rem 1.5rem 1.5rem;
             font-size: 1.06rem;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s, transform 0.7s;
+            animation: fadeIn 1.3s;
+        }
+        section.tab.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
         #momentos {
             display: flex;
@@ -94,10 +138,11 @@
             flex-direction: column;
             align-items: center;
             transition: box-shadow 0.2s, transform 0.18s;
+            animation: fadeInCard 1.5s;
         }
         .momento-recuerdo:hover {
             box-shadow: 0 6px 24px rgba(76, 81, 198, 0.12);
-            transform: translateY(-4px) scale(1.04);
+            transform: translateY(-4px) scale(1.04) rotate(-1deg);
         }
         .momento-recuerdo h3 {
             margin: 0 0 0.6rem 0;
@@ -114,15 +159,70 @@
             margin-bottom: 0.2rem;
             box-shadow: 0 2px 8px #ff477e22;
             transition: transform 0.2s;
+            cursor: pointer;
         }
         .momento-recuerdo img:hover {
-            transform: scale(1.09) rotate(-2deg);
+            transform: scale(1.13) rotate(-2deg);
         }
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0; right:0; bottom:0;
+            background: rgba(34, 34, 34, 0.93);
+            justify-content: center;
+            align-items: center;
+        }
+        .lightbox.show {
+            display: flex;
+            animation: fadeIn 0.6s;
+        }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 80vh;
+            border-radius: 1.2rem;
+            box-shadow: 0 6px 36px #ff477e44;
+            border: 5px solid #fff;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            font-size: 2.5rem;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 10000;
+            text-shadow: 0 2px 12px #000;
+        }
+        /* Spotify */
         .spotify-player {
             display: flex;
             justify-content: center;
             margin-bottom: 2rem;
         }
+        /* Footer */
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 1.5rem 0 .7rem 0;
+            background: transparent;
+            color: #b4b4b4;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+        }
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(60px);}
+            to   { opacity: 1; transform: translateY(0);}
+        }
+        @keyframes fadeInCard {
+            from { opacity: 0; transform: scale(0.92);}
+            to   { opacity: 1; transform: scale(1);}
+        }
+        /* Responsive */
         @media (max-width: 700px) {
             .landing h1 {
                 font-size: 1.33rem;
@@ -146,25 +246,45 @@
                 width: 110px;
                 height: 110px;
             }
+            .lightbox-close {
+                right: 18px;
+                top: 12px;
+                font-size: 2rem;
+            }
+        }
+        body.dark section.tab,
+        body.dark .momento-recuerdo {
+            background: #30336b;
+            color: #f6f6f6;
+        }
+        body.dark .momento-recuerdo h3 {
+            color: #ffd6e0;
+        }
+        body.dark nav li,
+        body.dark .theme-toggle {
+            background: var(--accent);
+        }
+        body.dark nav li.active, body.dark nav li:hover {
+            background: var(--primary);
         }
     </style>
 </head>
 <body>
+    <button class="theme-toggle" id="theme-toggle" title="Cambiar tema">🌙</button>
     <div class="landing">
         <h1>¡FELIZ FELIZ NO CUMPLEAÑOS! ó Fröhlichen Nicht-Geburtstag!</h1>
         <img src="FotoCuajo.jpg" alt="Cuajo" class="main-photo">
     </div>
-    
     <nav>
         <ul>
-            <li onclick="showTab('cumple')">🎂 No Cumpleaños</li>
-            <li onclick="showTab('momentos')">📸 Momentos</li>
-            <li onclick="showTab('sorpresa')">🎁 INVITACIÓN</li>
-            <li onclick="showTab('mensaje')">💌 Cartita</li>
+            <li class="active" onclick="showTab('cumple', this)">🎂 No Cumpleaños</li>
+            <li onclick="showTab('momentos', this)">📸 Momentos</li>
+            <li onclick="showTab('sorpresa', this)">🎁 INVITACIÓN</li>
+            <li onclick="showTab('mensaje', this)">💌 Cartita</li>
         </ul>
     </nav>
 
-    <section id="cumple" class="tab" style="display: block;">
+    <section id="cumple" class="tab show">
         <strong>Porque cualquier día es perfecto para celebrarte, Cuajo.</strong>
     </section>
 
@@ -172,11 +292,11 @@
         <div id="momentos">
             <div class="momento-recuerdo">
                 <h3>Recuerdo 1</h3>
-                <img src="WhatsApp_Image_2025-05-08_at_19.22.03.jpg" alt="Recuerdo 1">
+                <img src="recuerdo1.jpg" alt="Recuerdo 1" onclick="openLightbox('recuerdo1.jpg')">
             </div>
             <div class="momento-recuerdo">
                 <h3>Recuerdo 2</h3>
-                <img src="WhatsApp_Image_2025-05-06_at_20.43.05.jpg" alt="Recuerdo 2">
+                <img src="recuerdo2.jpg" alt="Recuerdo 2" onclick="openLightbox('recuerdo2.jpg')">
             </div>
         </div>
     </section>
@@ -217,15 +337,45 @@
         </iframe>
     </div>
 
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+        <img src="" alt="Foto ampliada" id="lightbox-img">
+    </div>
+
+    <footer>
+        Hecho con 💖 por Diego Sierra · 2025 · Para Cuajo
+    </footer>
+
     <script>
-        function showTab(tabId) {
-            // Hide all tabs
-            document.querySelectorAll('.tab').forEach(tab => tab.style.display = 'none');
-            // Show the selected tab
-            document.getElementById(tabId).style.display = 'block';
+        // Tabs
+        function showTab(tabId, el) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('show'));
+            document.getElementById(tabId).classList.add('show');
+            document.querySelectorAll('nav li').forEach(li => li.classList.remove('active'));
+            if(el) el.classList.add('active');
         }
-        // Show the initial tab on load
-        window.onload = () => showTab('cumple');
+        // Initial tab
+        window.onload = () => showTab('cumple', document.querySelector('nav li'));
+
+        // Lightbox
+        function openLightbox(src) {
+            document.getElementById('lightbox').classList.add('show');
+            document.getElementById('lightbox-img').src = src;
+        }
+        function closeLightbox(event) {
+            if (event.target.classList.contains('lightbox') || event.currentTarget.classList.contains('lightbox-close')) {
+                document.getElementById('lightbox').classList.remove('show');
+                document.getElementById('lightbox-img').src = '';
+            }
+        }
+
+        // Theme toggle
+        const themeBtn = document.getElementById('theme-toggle');
+        themeBtn.onclick = () => {
+            document.body.classList.toggle('dark');
+            themeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+        };
     </script>
 </body>
 </html>
