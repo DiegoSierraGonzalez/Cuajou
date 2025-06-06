@@ -7,6 +7,15 @@
     --hover-color: #ffb6c1;
     --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.2);
     --shadow-medium: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    /* Modern additions */
+    --primary: #ff477e;
+    --secondary: #ffd6e0;
+    --accent: #4c51c6;
+    --bg: linear-gradient(135deg, #ffe5ec 0%, #b8c6db 100%);
+    --bg-dark: linear-gradient(135deg, #232946 0%, #4c51c6 100%);
+    --text-dark: #f6f6f6;
+    --white: #fff;
 }
 
 /* Reset básico para consistencia entre navegadores */
@@ -18,31 +27,61 @@
 
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', 'Montserrat', Arial, sans-serif;
     background: var(--background-color);
     color: var(--text-color);
     text-align: center;
+    min-height: 100vh;
+    transition: background 0.5s, color 0.5s;
 }
-
+body.dark {
+    background: var(--bg-dark);
+    color: var(--text-dark);
+}
 .landing {
     background: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
     padding: 30px 20px;
 }
-
 .landing h1 {
     font-size: 2.5em;
     font-weight: 300;
     color: #fff;
+    background: linear-gradient(90deg, #ff477e 40%, #4c51c6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
-
 .main-photo {
     width: 60%;
     max-width: 400px;
     margin-top: 20px;
     border-radius: 10px;
     box-shadow: var(--shadow-light);
+    border: 5px solid var(--primary);
+    object-fit: cover;
+    transition: border 0.3s;
 }
-
+body.dark .main-photo {
+    border: 5px solid var(--accent);
+}
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: var(--primary);
+    border: none;
+    color: #fff;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    box-shadow: 0 2px 10px #ff477e33;
+    transition: background 0.3s;
+    z-index: 99;
+}
+.theme-toggle:hover {
+    background: var(--accent);
+}
 nav ul {
     list-style: none;
     display: flex;
@@ -50,18 +89,24 @@ nav ul {
     background: #e6e6e6;
     padding: 0;
     margin: 0;
+    gap: 1.25rem;
 }
-
 nav li {
     padding: 15px 25px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.18s;
+    font-weight: 600;
+    background: var(--primary);
+    color: var(--white);
+    border-radius: 2rem;
+    box-shadow: 0 2px 10px rgba(255, 71, 126, 0.07);
+    font-size: 1.07rem;
+    user-select: none;
 }
-
-nav li:hover {
-    background: var(--hover-color);
+nav li.active, nav li:hover {
+    background: var(--accent);
+    transform: translateY(-2px) scale(1.05);
 }
-
 .tab {
     display: none;
     padding: 20px;
@@ -71,23 +116,253 @@ nav li:hover {
     max-width: 600px;
     border-radius: 10px;
     box-shadow: var(--shadow-medium);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s, transform 0.7s;
 }
-
+.tab.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Modern Moments */
+#momentos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+.momento-recuerdo {
+    background: var(--secondary);
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 8px rgba(255, 71, 126, 0.06);
+    padding: 1.2rem 1.2rem 1rem 1.2rem;
+    text-align: center;
+    width: 185px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.2s, transform 0.18s;
+}
+.momento-recuerdo:hover {
+    box-shadow: 0 6px 24px rgba(76, 81, 198, 0.12);
+    transform: translateY(-4px) scale(1.04) rotate(-1deg);
+}
+.momento-recuerdo h3 {
+    margin: 0 0 0.6rem 0;
+    color: var(--accent);
+    font-size: 1.08rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+.momento-recuerdo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 0.8rem;
+    object-fit: cover;
+    margin-bottom: 0.2rem;
+    box-shadow: 0 2px 8px #ff477e22;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+.momento-recuerdo img:hover {
+    transform: scale(1.13) rotate(-2deg);
+}
+/* Lightbox */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0; right:0; bottom:0;
+    background: rgba(34, 34, 34, 0.93);
+    justify-content: center;
+    align-items: center;
+}
+.lightbox.show {
+    display: flex;
+    animation: fadeIn 0.6s;
+}
+.lightbox img {
+    max-width: 90vw;
+    max-height: 80vh;
+    border-radius: 1.2rem;
+    box-shadow: 0 6px 36px #ff477e44;
+    border: 5px solid #fff;
+}
+.lightbox-close {
+    position: absolute;
+    top: 40px;
+    right: 60px;
+    font-size: 2.5rem;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10000;
+    text-shadow: 0 2px 12px #000;
+}
+/* Árbol de recuerdos */
+#arbol-svg {
+    display: block;
+    margin: 0 auto;
+    background: none;
+}
+.hoja {
+    stroke: #333;
+    stroke-width: 1.2px;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+}
+.hoja:hover {
+    transform: scale(1.18);
+    filter: brightness(1.18) drop-shadow(0 0 6px #fff8);
+}
+.recuerdo-popup {
+    position: absolute;
+    display: none;
+    background: #fffbe9;
+    color: #232946;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    border: 2px solid #ff477e;
+    font-size: 1.12rem;
+    box-shadow: 0 8px 32px #ffd6e0cc;
+    min-width: 160px;
+    z-index: 9000;
+    pointer-events: none;
+}
+.arbol-titulo {
+    text-align: center;
+    color: #4c51c6;
+    font-weight: bold;
+    margin-bottom: 1.2rem;
+}
+.arbol-tip {
+    text-align: center;
+    font-size: 1.01rem;
+    color: #7c7c7c;
+}
+body.dark .recuerdo-popup {
+    background: #232946;
+    color: #ffd6e0;
+    border: 2px solid #8ecae6;
+}
+body.dark .arbol-titulo {
+    color: #ffd6e0;
+}
+/* Minijuego */
+.game-area {
+    position: relative;
+    width: 100%;
+    height: 330px;
+    background: #e7f6fa;
+    border-radius: 18px;
+    margin: 1.2rem auto 1rem auto;
+    overflow: hidden;
+    box-shadow: 0 2px 18px #8ecae644;
+    max-width: 350px;
+}
+.balloon {
+    position: absolute;
+    bottom: -70px;
+    width: 44px;
+    height: 56px;
+    border-radius: 22px 22px 24px 24px / 40px 40px 28px 28px;
+    animation: floatUp 4s linear forwards;
+    box-shadow: 0 6px 16px #ff477e33, inset 0 2px 10px #fff8;
+    cursor: pointer;
+}
+@keyframes floatUp {
+    from { bottom: -70px;}
+    to { bottom: 320px;}
+}
+.balloon.pop {
+    animation: popBalloon 0.3s forwards;
+    background: #fff;
+}
+@keyframes popBalloon {
+    to { transform: scale(1.4); opacity: 0;}
+}
+.score {
+    text-align: center;
+    font-size: 1.25rem;
+    margin: 0.5rem 0 0 0;
+    color: #ff477e;
+    font-weight: bold;
+}
+.game-message {
+    text-align: center;
+    font-size: 1.12rem;
+    color: #4c51c6;
+    margin-top: 0.6rem;
+    min-height: 1rem;
+}
+body.dark .game-area {
+    background: #232946;
+}
+body.dark .score, body.dark .game-message {
+    color: #ffd6e0;
+}
 .spotify-player {
     margin: 30px auto;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
 }
-
-/* Media queries para responsividad */
-@media (max-width: 600px) {
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 1.5rem 0 .7rem 0;
+    background: transparent;
+    color: #b4b4b4;
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+}
+@media (max-width: 700px), (max-width: 600px) {
     .main-photo {
         width: 90%;
+        max-width: 110px;
     }
-
     .landing h1 {
         font-size: 2em;
     }
-
     nav li {
         padding: 10px 15px;
     }
+    section.tab {
+        padding: 1.3rem 0.7rem 1rem 0.7rem;
+    }
+    #momentos {
+        gap: 1rem;
+    }
+    .momento-recuerdo {
+        width: 95vw;
+        max-width: 330px;
+        padding: 0.9rem 0.3rem 0.6rem 0.3rem;
+    }
+    .momento-recuerdo img {
+        width: 110px;
+        height: 110px;
+    }
+    .lightbox-close {
+        right: 18px;
+        top: 12px;
+        font-size: 2rem;
+    }
+    .game-area {
+        height: 200px;
+        max-width: 95vw;
+    }
+}
+body.dark section.tab,
+body.dark .momento-recuerdo {
+    background: #30336b;
+    color: #f6f6f6;
+}
+body.dark nav li,
+body.dark .theme-toggle {
+    background: var(--accent);
+}
+body.dark nav li.active, body.dark nav li:hover {
+    background: var(--primary);
 }
