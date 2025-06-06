@@ -1,14 +1,4 @@
-/* Variables globales para colores y otros valores */
 :root {
-    --primary-color: #ffc0cb;
-    --secondary-color: #d3d3d3;
-    --background-color: #f5f5f5;
-    --text-color: #333;
-    --hover-color: #ffb6c1;
-    --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.2);
-    --shadow-medium: 0 0 10px rgba(0, 0, 0, 0.1);
-
-    /* Modern additions */
     --primary: #ff477e;
     --secondary: #ffd6e0;
     --accent: #4c51c6;
@@ -27,9 +17,9 @@
 
 body {
     margin: 0;
-    font-family: 'Segoe UI', 'Montserrat', Arial, sans-serif;
-    background: var(--background-color);
-    color: var(--text-color);
+    font-family: 'Montserrat', Arial, sans-serif;
+    background: var(--bg);
+    color: #232946;
     text-align: center;
     min-height: 100vh;
     transition: background 0.5s, color 0.5s;
@@ -39,25 +29,26 @@ body.dark {
     color: var(--text-dark);
 }
 .landing {
-    background: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(to bottom right, var(--primary), var(--secondary));
     padding: 30px 20px;
 }
 .landing h1 {
-    font-size: 2.5em;
-    font-weight: 300;
-    color: #fff;
+    font-size: 2.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
     background: linear-gradient(90deg, #ff477e 40%, #4c51c6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 .main-photo {
-    width: 60%;
-    max-width: 400px;
+    width: 150px;
+    height: 150px;
     margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: var(--shadow-light);
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border: 5px solid var(--primary);
     object-fit: cover;
+    background: var(--white);
     transition: border 0.3s;
 }
 body.dark .main-photo {
@@ -86,13 +77,14 @@ nav ul {
     list-style: none;
     display: flex;
     justify-content: center;
-    background: #e6e6e6;
+    background: transparent;
     padding: 0;
     margin: 0;
     gap: 1.25rem;
+    flex-wrap: wrap;
 }
 nav li {
-    padding: 15px 25px;
+    padding: 0.7rem 1.5rem;
     cursor: pointer;
     transition: background 0.3s, transform 0.18s;
     font-weight: 600;
@@ -102,31 +94,32 @@ nav li {
     box-shadow: 0 2px 10px rgba(255, 71, 126, 0.07);
     font-size: 1.07rem;
     user-select: none;
+    white-space: nowrap;
 }
 nav li.active, nav li:hover {
     background: var(--accent);
     transform: translateY(-2px) scale(1.05);
 }
-.tab {
+section.tab {
     display: none;
-    padding: 20px;
-    font-size: 1.2em;
-    background: #fff;
-    margin: 10px auto;
     max-width: 600px;
-    border-radius: 10px;
-    box-shadow: var(--shadow-medium);
+    margin: 0 auto 2rem auto;
+    background: var(--white);
+    border-radius: 1.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    font-size: 1.06rem;
     opacity: 0;
     transform: translateY(40px);
     transition: opacity 0.6s, transform 0.7s;
+    animation: fadeIn 1.3s 2.3s both;
 }
-.tab.show {
+section.tab.show {
     display: block;
     opacity: 1;
     transform: translateY(0);
 }
-/* Modern Moments */
-#momentos {
+#momentos-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -164,6 +157,8 @@ nav li.active, nav li:hover {
     box-shadow: 0 2px 8px #ff477e22;
     transition: transform 0.2s;
     cursor: pointer;
+    max-width: 100%;
+    height: auto;
 }
 .momento-recuerdo img:hover {
     transform: scale(1.13) rotate(-2deg);
@@ -201,113 +196,26 @@ nav li.active, nav li:hover {
     z-index: 10000;
     text-shadow: 0 2px 12px #000;
 }
-/* Árbol de recuerdos */
-#arbol-svg {
-    display: block;
-    margin: 0 auto;
-    background: none;
-}
-.hoja {
-    stroke: #333;
-    stroke-width: 1.2px;
-    cursor: pointer;
-    transition: transform 0.2s, filter 0.2s;
-}
-.hoja:hover {
-    transform: scale(1.18);
-    filter: brightness(1.18) drop-shadow(0 0 6px #fff8);
-}
-.recuerdo-popup {
-    position: absolute;
-    display: none;
-    background: #fffbe9;
-    color: #232946;
-    padding: 1rem 1.5rem;
-    border-radius: 1rem;
-    border: 2px solid #ff477e;
-    font-size: 1.12rem;
-    box-shadow: 0 8px 32px #ffd6e0cc;
-    min-width: 160px;
-    z-index: 9000;
-    pointer-events: none;
-}
-.arbol-titulo {
-    text-align: center;
-    color: #4c51c6;
-    font-weight: bold;
-    margin-bottom: 1.2rem;
-}
-.arbol-tip {
-    text-align: center;
-    font-size: 1.01rem;
-    color: #7c7c7c;
-}
-body.dark .recuerdo-popup {
-    background: #232946;
-    color: #ffd6e0;
-    border: 2px solid #8ecae6;
-}
-body.dark .arbol-titulo {
-    color: #ffd6e0;
-}
-/* Minijuego */
-.game-area {
-    position: relative;
-    width: 100%;
-    height: 330px;
-    background: #e7f6fa;
-    border-radius: 18px;
-    margin: 1.2rem auto 1rem auto;
-    overflow: hidden;
-    box-shadow: 0 2px 18px #8ecae644;
-    max-width: 350px;
-}
-.balloon {
-    position: absolute;
-    bottom: -70px;
-    width: 44px;
-    height: 56px;
-    border-radius: 22px 22px 24px 24px / 40px 40px 28px 28px;
-    animation: floatUp 4s linear forwards;
-    box-shadow: 0 6px 16px #ff477e33, inset 0 2px 10px #fff8;
-    cursor: pointer;
-}
-@keyframes floatUp {
-    from { bottom: -70px;}
-    to { bottom: 320px;}
-}
-.balloon.pop {
-    animation: popBalloon 0.3s forwards;
-    background: #fff;
-}
-@keyframes popBalloon {
-    to { transform: scale(1.4); opacity: 0;}
-}
-.score {
-    text-align: center;
-    font-size: 1.25rem;
-    margin: 0.5rem 0 0 0;
-    color: #ff477e;
-    font-weight: bold;
-}
-.game-message {
-    text-align: center;
-    font-size: 1.12rem;
-    color: #4c51c6;
-    margin-top: 0.6rem;
-    min-height: 1rem;
-}
-body.dark .game-area {
-    background: #232946;
-}
-body.dark .score, body.dark .game-message {
-    color: #ffd6e0;
-}
 .spotify-player {
-    margin: 30px auto;
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-bottom: 2rem;
+    width: 100%;
+}
+.spotify-player iframe {
+    border-radius: 12px;
+    width: 300px;
+    max-width: 100%;
+    min-width: 180px;
+    display: block;
+}
+@media (max-width: 500px) {
+    .spotify-player iframe {
+        width: 100%;
+        min-width: 0;
+        max-width: 100vw;
+    }
 }
 footer {
     width: 100%;
@@ -318,22 +226,25 @@ footer {
     font-size: 1rem;
     letter-spacing: 0.3px;
 }
-@media (max-width: 700px), (max-width: 600px) {
-    .main-photo {
-        width: 90%;
-        max-width: 110px;
-    }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(60px);}
+    to   { opacity: 1; transform: translateY(0);}
+}
+@media (max-width: 700px) {
     .landing h1 {
-        font-size: 2em;
+        font-size: 1.33rem;
     }
-    nav li {
-        padding: 10px 15px;
+    .main-photo {
+        width: 110px;
+        height: 110px;
     }
     section.tab {
         padding: 1.3rem 0.7rem 1rem 0.7rem;
     }
-    #momentos {
+    #momentos-container {
         gap: 1rem;
+        flex-direction: column;
+        align-items: center;
     }
     .momento-recuerdo {
         width: 95vw;
@@ -341,23 +252,32 @@ footer {
         padding: 0.9rem 0.3rem 0.6rem 0.3rem;
     }
     .momento-recuerdo img {
-        width: 110px;
-        height: 110px;
+        width: 100%;
+        max-width: 230px;
+        height: auto;
     }
     .lightbox-close {
         right: 18px;
         top: 12px;
         font-size: 2rem;
     }
-    .game-area {
-        height: 200px;
-        max-width: 95vw;
+    nav ul {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+    nav li {
+        font-size: 0.95rem;
+        padding: 0.45rem 1rem;
     }
 }
 body.dark section.tab,
 body.dark .momento-recuerdo {
     background: #30336b;
     color: #f6f6f6;
+}
+body.dark .momento-recuerdo h3 {
+    color: #ffd6e0;
 }
 body.dark nav li,
 body.dark .theme-toggle {
