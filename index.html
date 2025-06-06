@@ -3,39 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <title>¡FELIZ FELIZ NO CUMPLEAÑOS! ó Fröhlichen Nicht-Geburtstag!</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos para las animaciones */
-        #momentos img {
-            width: 150px; /* Ajusta el tamaño de las imágenes */
-            margin: 10px;
-            transition: transform 0.3s ease-in-out;
+        :root {
+            --primary: #ff477e;
+            --secondary: #ffd6e0;
+            --accent: #4c51c6;
+            --bg: linear-gradient(135deg, #ffe5ec 0%, #b8c6db 100%);
+            --text: #232946;
+            --white: #fff;
         }
-
-        #momentos img:hover {
-            transform: scale(1.1); /* Zoom al pasar el mouse */
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
         }
-
+        .landing {
+            text-align: center;
+            padding: 2.5rem 1rem 1.5rem 1rem;
+        }
+        .landing h1 {
+            font-size: 2.1rem;
+            letter-spacing: 1px;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .main-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid var(--primary);
+            box-shadow: 0 8px 32px rgba(76, 81, 198, 0.08);
+            object-fit: cover;
+            background: var(--white);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        nav ul {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            list-style: none;
+            gap: 1.25rem;
+        }
+        nav li {
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.7rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.18s;
+            box-shadow: 0 2px 10px rgba(255, 71, 126, 0.07);
+            font-size: 1.07rem;
+        }
+        nav li:hover {
+            background: var(--accent);
+            transform: translateY(-2px) scale(1.05);
+        }
+        section.tab {
+            display: none;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            background: var(--white);
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 18px rgba(44, 52, 99, 0.06);
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            font-size: 1.06rem;
+        }
         #momentos {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 30px;
+            gap: 2rem;
         }
         .momento-recuerdo {
+            background: var(--secondary);
+            border-radius: 1.2rem;
+            box-shadow: 0 2px 8px rgba(255, 71, 126, 0.06);
+            padding: 1.2rem 1.2rem 1rem 1.2rem;
+            text-align: center;
+            width: 185px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: box-shadow 0.2s, transform 0.18s;
+        }
+        .momento-recuerdo:hover {
+            box-shadow: 0 6px 24px rgba(76, 81, 198, 0.12);
+            transform: translateY(-4px) scale(1.04);
         }
         .momento-recuerdo h3 {
-            color: #222;
-            margin-bottom: 6px;
+            margin: 0 0 0.6rem 0;
+            color: var(--accent);
+            font-size: 1.08rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .momento-recuerdo img {
+            width: 150px;
+            height: 150px;
+            border-radius: 0.8rem;
+            object-fit: cover;
+            margin-bottom: 0.2rem;
+            box-shadow: 0 2px 8px #ff477e22;
+            transition: transform 0.2s;
+        }
+        .momento-recuerdo img:hover {
+            transform: scale(1.09) rotate(-2deg);
+        }
+        .spotify-player {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 700px) {
+            .landing h1 {
+                font-size: 1.33rem;
+            }
+            .main-photo {
+                width: 110px;
+                height: 110px;
+            }
+            section.tab {
+                padding: 1.3rem 0.7rem 1rem 0.7rem;
+            }
+            #momentos {
+                gap: 1rem;
+            }
+            .momento-recuerdo {
+                width: 95vw;
+                max-width: 330px;
+                padding: 0.9rem 0.3rem 0.6rem 0.3rem;
+            }
+            .momento-recuerdo img {
+                width: 110px;
+                height: 110px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="landing">
-        <h1 style="color: #ffffff;">¡FELIZ FELIZ NO CUMPLEAÑOS! ó Fröhlichen Nicht-Geburtstag!</h1>
+        <h1>¡FELIZ FELIZ NO CUMPLEAÑOS! ó Fröhlichen Nicht-Geburtstag!</h1>
         <img src="FotoCuajo.jpg" alt="Cuajo" class="main-photo">
     </div>
     
@@ -43,12 +159,15 @@
         <ul>
             <li onclick="showTab('cumple')">🎂 No Cumpleaños</li>
             <li onclick="showTab('momentos')">📸 Momentos</li>
-            <li onclick="showTab('sorpresa')">🎁 INVITACIÓN </li>
+            <li onclick="showTab('sorpresa')">🎁 INVITACIÓN</li>
             <li onclick="showTab('mensaje')">💌 Cartita</li>
         </ul>
     </nav>
 
-    <section id="cumple" class="tab" style="display: block;">Porque cualquier día es perfecto para celebrarte, Cuajo.</section>
+    <section id="cumple" class="tab" style="display: block;">
+        <strong>Porque cualquier día es perfecto para celebrarte, Cuajo.</strong>
+    </section>
+
     <section id="momentos" class="tab">
         <div id="momentos">
             <div class="momento-recuerdo">
@@ -61,35 +180,32 @@
             </div>
         </div>
     </section>
+
     <section id="sorpresa" class="tab">
-        ¡Hola, Cuajo 🏁❤️
-
-        Tengo una propuesta digna del paddock de Ferrari:
-        Quiero invitarte a ver la nueva película de la Fórmula 1.
-
+        <strong>¡Hola, Cuajo 🏁❤️</strong>
+        <br><br>
+        Tengo una propuesta digna del paddock de Ferrari: <br>
+        Quiero invitarte a ver la nueva película de la Fórmula 1.<br><br>
         Tú serías la escudería Ferrari, impecable, con clase, y siempre robando miradas…
-        y yo, bueno… yo sería el piloto que solo quiere una vuelta contigo, aunque sea en la curva más cerrada del calendario 😅🏎️💘
-
+        y yo, bueno… yo sería el piloto que solo quiere una vuelta contigo, aunque sea en la curva más cerrada del calendario 😅🏎️💘<br><br>
         Si te animas, prometo llevar mi pierna buena, comentarios de segundo lugar (porque el primero siempre te lo dejo a ti) y buena compañía en la recta final.
-        Mas chistes malos como ese.
-
+        Más chistes malos como ese.<br><br>
         ¿Aceptas esta pole position a mi lado? ✨
     </section>
+
     <section id="mensaje" class="tab">
-        Querida Cuajo,
-
-        ¡Fröhlichen Nicht-Geburtstag!
-        Hoy no es tu cumpleaños, pero eso no me detiene para celebrarte como si lo fuera.
-
-        Sé que no estuve contigo ese día especial, y créeme que lo he tenido en el corazón desde entonces. A veces la vida nos pone lejos en los momentos que más quisiéramos estar cerca, pero siempre hay formas de compensarlo.
-
-        Este “no cumpleaños” es solo una excusa para decirte que me importas muchísimo. Que me emociona cada día compartir momentos contigo, y que si pudiera retroceder el tiempo, estaría ahí contigo sin pensarlo dos veces.
-
-        Deseo que todo lo bueno que sueñas siga llegando a tu vida, y que nunca te falte un motivo para sonreír. Yo, por mi parte, siempre voy a estar buscando nuevas formas de hacerte sentir especial.
-
-        Brindo por ti, Cuajo. Por lo que eres, por lo que sueñas y por todo lo bonito que aún nos queda por vivir.
-
-        MIT LIEBE, Diego 💖
+        <strong>Querida Cuajo,</strong>
+        <br><br>
+        ¡Fröhlichen Nicht-Geburtstag!<br>
+        Hoy no es tu cumpleaños, pero eso no me detiene para celebrarte como si lo fuera.<br><br>
+        Sé que no estuve contigo ese día especial, y créeme que lo he tenido en el corazón desde entonces.
+        A veces la vida nos pone lejos en los momentos que más quisiéramos estar cerca, pero siempre hay formas de compensarlo.<br><br>
+        Este “no cumpleaños” es solo una excusa para decirte que me importas muchísimo.
+        Que me emociona cada día compartir momentos contigo, y que si pudiera retroceder el tiempo, estaría ahí contigo sin pensarlo dos veces.<br><br>
+        Deseo que todo lo bueno que sueñas siga llegando a tu vida, y que nunca te falte un motivo para sonreír.
+        Yo, por mi parte, siempre voy a estar buscando nuevas formas de hacerte sentir especial.<br><br>
+        Brindo por ti, Cuajo. Por lo que eres, por lo que sueñas y por todo lo bonito que aún nos queda por vivir.<br><br>
+        <em>MIT LIEBE, Diego 💖</em>
     </section>
 
     <div class="spotify-player">
@@ -103,12 +219,12 @@
 
     <script>
         function showTab(tabId) {
-            // Ocultar todas las pestañas
+            // Hide all tabs
             document.querySelectorAll('.tab').forEach(tab => tab.style.display = 'none');
-            // Mostrar la pestaña seleccionada
+            // Show the selected tab
             document.getElementById(tabId).style.display = 'block';
         }
-        // Mostrar la pestaña inicial al cargar la página
+        // Show the initial tab on load
         window.onload = () => showTab('cumple');
     </script>
 </body>
