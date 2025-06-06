@@ -205,107 +205,6 @@
         .momento-recuerdo img:hover {
             transform: scale(1.13) rotate(-2deg);
         }
-        /* Timeline styles */
-        .timeline-title {
-          text-align: center;
-          color: var(--accent);
-          margin-bottom: 2rem;
-          font-size: 1.7em;
-          font-weight: 700;
-        }
-        .timeline {
-          position: relative;
-          max-width: 800px;
-          margin: 0 auto;
-          padding: 2rem 0;
-        }
-        .timeline::after {
-          content: '';
-          position: absolute;
-          width: 4px;
-          background: var(--primary);
-          top: 0;
-          bottom: 0;
-          left: 50%;
-          margin-left: -2px;
-        }
-        .timeline-event {
-          padding: 1.2rem 3rem;
-          position: relative;
-          width: 50%;
-          box-sizing: border-box;
-        }
-        .timeline-event.left {
-          left: 0;
-        }
-        .timeline-event.right {
-          left: 50%;
-        }
-        .timeline-event .content {
-          background: var(--white);
-          color: var(--text);
-          padding: 1.2rem;
-          border-radius: 1.2rem;
-          box-shadow: 0 4px 16px #ff477e13;
-          position: relative;
-          transition: box-shadow 0.3s;
-          text-align: left;
-          min-height: 90px;
-        }
-        .timeline-event .content:hover {
-          box-shadow: 0 8px 28px #ff477e22;
-        }
-        .timeline-event .date {
-          font-size: 0.95em;
-          color: var(--accent);
-          font-weight: 500;
-          margin-bottom: 0.6rem;
-          display: block;
-        }
-        .timeline-event img {
-          display: block;
-          margin-top: 0.7rem;
-          max-width: 120px;
-          border-radius: 0.6rem;
-          box-shadow: 0 2px 8px #4c51c666;
-        }
-        .timeline-event::before {
-          content: '';
-          position: absolute;
-          width: 22px;
-          height: 22px;
-          right: -11px;
-          background: var(--primary);
-          border: 4px solid var(--white);
-          top: 24px;
-          border-radius: 50%;
-          z-index: 1;
-        }
-        .timeline-event.right::before {
-          left: -11px;
-          right: auto;
-        }
-        @media (max-width: 700px) {
-          .timeline-event, .timeline-event.right, .timeline-event.left {
-            width: 100%;
-            left: 0 !important;
-            padding: 1.2rem 1rem;
-          }
-          .timeline::after {
-            left: 20px;
-          }
-          .timeline-event .content {
-            margin-left: 30px;
-          }
-          .timeline-event.right .content {
-            margin-left: 30px;
-          }
-          .timeline-event::before,
-          .timeline-event.right::before {
-            left: 0;
-            right: auto;
-          }
-        }
         /* Lightbox */
         .lightbox {
             display: none;
@@ -422,7 +321,7 @@
     <!-- Splash -->
     <div class="splash" id="splash">
         <h1>🎉 ¡Bienvenida, Cuajo! 🎉</h1>
-        <p>Me gusta pensar que esta página es un reflejo de lo que eres para mí: especial, única y llena de luz...<br>¡Por una vida despeinados!</p>
+        <p>Hoy no es tu cumpleaños...<br>¡pero sí una experiencia para celebrarte!</p>
     </div>
     <canvas class="confetti" id="confetti"></canvas>
     <div class="main-content" id="main-content">
@@ -435,7 +334,6 @@
             <ul>
                 <li class="active" onclick="showTab('cumple', this)">🎂 No Cumpleaños</li>
                 <li onclick="showTab('momentos', this)">📸 Momentos</li>
-                <li onclick="showTab('timeline', this)">🕰️ Línea del Tiempo</li>
                 <li onclick="showTab('sorpresa', this)">🎁 INVITACIÓN</li>
                 <li onclick="showTab('mensaje', this)">💌 Cartita</li>
             </ul>
@@ -444,7 +342,13 @@
             <strong>Porque cualquier día es perfecto para celebrarte, Cuajo.</strong>
         </section>
         <section id="momentos" class="tab">
-            <div id="momentos">
+            <div id="momentos-placeholder" style="text-align:center; padding:2rem;">
+              <button onclick="mostrarRecuerdos()" style="padding:1rem 2rem; border-radius:1.2rem; background:#ff477e; color:#fff; border:none; font-size:1.1rem; cursor:pointer; font-family:Montserrat,sans-serif;">
+                Mostrar recuerdos
+              </button>
+              <div style="margin-top: 1rem; color: #888;">Haz clic para ver algunos recuerdos especiales 💖</div>
+            </div>
+            <div id="momentos" style="display:none;">
                 <div class="momento-recuerdo">
                     <h3>Recuerdo 1</h3>
                     <img src="recuerdo1.jpg" alt="Recuerdo 1" onclick="openLightbox('recuerdo1.jpg')" onerror="this.src='default.jpg'">
@@ -454,42 +358,6 @@
                     <img src="recuerdo2.jpg" alt="Recuerdo 2" onclick="openLightbox('recuerdo2.jpg')" onerror="this.src='default.jpg'">
                 </div>
             </div>
-        </section>
-        <!-- NUEVA SECCIÓN DE LÍNEA DEL TIEMPO -->
-        <section id="timeline" class="tab">
-          <h2 class="timeline-title">Nuestra Historia</h2>
-          <div class="timeline">
-            <div class="timeline-event left">
-              <div class="content">
-                <h3>Primer mensaje</h3>
-                <span class="date">22 marzo 2025</span>
-                <p>¡El día que te escribi por primera vez y empezó todo! 💌</p>
-              </div>
-            </div>
-            <div class="timeline-event right">
-              <div class="content">
-                <h3>Primera cita</h3>
-                <span class="date">5 junio 2025</span>
-                <p>El café, los retos y las risas. ¡Inolvidable!</p>
-                <img src="FirstDate.png" alt="Primera cita" onerror="this.src='default.jpg'">
-              </div>
-            </div>
-            <div class="timeline-event left">
-              <div class="content">
-                <h3>Viaje juntos</h3>
-                <span class="date">20 May 2023</span>
-                <p>Nuestra primera aventura fuera de la ciudad, ¡qué recuerdos!</p>
-                <img src="foto_viaje.jpg" alt="Viaje juntos" onerror="this.src='default.jpg'">
-              </div>
-            </div>
-            <div class="timeline-event right">
-              <div class="content">
-                <h3>Hoy</h3>
-                <span class="date">06 Jun 2025</span>
-                <p>¡Seguimos sumando momentos y sueños juntos! 💖</p>
-              </div>
-            </div>
-          </div>
         </section>
         <section id="sorpresa" class="tab">
             <strong>¡Hola, Cuajo 🏁❤️</strong>
@@ -540,7 +408,7 @@
             setTimeout(() => {
                 document.getElementById('splash').style.display = 'none';
                 document.getElementById('main-content').style.opacity = '1';
-            }, 700); // espera el fade
+            }, 700);
         }, 2700);
 
         // Confetti Animation
@@ -619,9 +487,14 @@
             }
         }
 
+        // Mostrar recuerdos
+        function mostrarRecuerdos() {
+            document.getElementById('momentos-placeholder').style.display = 'none';
+            document.getElementById('momentos').style.display = 'flex';
+        }
+
         // Theme toggle con persistencia en localStorage
         const themeBtn = document.getElementById('theme-toggle');
-        // Al cargar, checa el localStorage
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark');
             themeBtn.textContent = '☀️';
