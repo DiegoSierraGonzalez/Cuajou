@@ -22,15 +22,53 @@
             color: var(--text);
             min-height: 100vh;
             transition: background 0.6s, color 0.5s;
+            overflow-x: hidden;
         }
         body.dark {
             background: var(--bg-dark);
             color: var(--text-dark);
         }
+        .splash {
+            position: fixed;
+            z-index: 10000;
+            left: 0; top: 0; right: 0; bottom: 0;
+            background: linear-gradient(120deg, #ff477e 30%, #4c51c6 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            font-weight: bold;
+            opacity: 1;
+            animation: fadeOutSplash 1.5s 2.2s forwards;
+        }
+        .splash h1 {
+            margin: 0;
+            padding: 0;
+            text-shadow: 0 4px 24px #23294633;
+        }
+        .splash p {
+            font-size: 1.2rem;
+            margin-top: 1.3rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        @keyframes fadeOutSplash {
+            to { opacity: 0; pointer-events: none; }
+        }
+        .main-content {
+            opacity: 0;
+            animation: fadeInMain 1.4s 2.3s forwards;
+        }
+        @keyframes fadeInMain {
+            to { opacity: 1; }
+        }
         .landing {
             text-align: center;
             padding: 2.5rem 1rem 1.5rem 1rem;
-            animation: fadeIn 1.3s;
+            animation: fadeIn 1.3s 2.3s both;
         }
         .landing h1 {
             font-size: 2.1rem;
@@ -114,7 +152,7 @@
             opacity: 0;
             transform: translateY(40px);
             transition: opacity 0.6s, transform 0.7s;
-            animation: fadeIn 1.3s;
+            animation: fadeIn 1.3s 2.3s both;
         }
         section.tab.show {
             display: block;
@@ -138,7 +176,7 @@
             flex-direction: column;
             align-items: center;
             transition: box-shadow 0.2s, transform 0.18s;
-            animation: fadeInCard 1.5s;
+            animation: fadeInCard 1.5s 2.5s both;
         }
         .momento-recuerdo:hover {
             box-shadow: 0 6px 24px rgba(76, 81, 198, 0.12);
@@ -196,6 +234,13 @@
             cursor: pointer;
             z-index: 10000;
             text-shadow: 0 2px 12px #000;
+        }
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            z-index: 10001;
         }
         /* Spotify */
         .spotify-player {
@@ -270,84 +315,145 @@
     </style>
 </head>
 <body>
-    <button class="theme-toggle" id="theme-toggle" title="Cambiar tema">🌙</button>
-    <div class="landing">
-        <h1>¡FELIZ FELIZ NO CUMPLEAÑOS! ó Fröhlichen Nicht-Geburtstag!</h1>
-        <img src="FotoCuajo.jpg" alt="Cuajo" class="main-photo">
+    <!-- Splash -->
+    <div class="splash" id="splash">
+        <h1>🎉 ¡Bienvenida, Cuajo! 🎉</h1>
+        <p>Hoy no es tu cumpleaños...<br>¡pero sí una experiencia para celebrarte!</p>
     </div>
-    <nav>
-        <ul>
-            <li class="active" onclick="showTab('cumple', this)">🎂 No Cumpleaños</li>
-            <li onclick="showTab('momentos', this)">📸 Momentos</li>
-            <li onclick="showTab('sorpresa', this)">🎁 INVITACIÓN</li>
-            <li onclick="showTab('mensaje', this)">💌 Cartita</li>
-        </ul>
-    </nav>
-
-    <section id="cumple" class="tab show">
-        <strong>Porque cualquier día es perfecto para celebrarte, Cuajo.</strong>
-    </section>
-
-    <section id="momentos" class="tab">
-        <div id="momentos">
-            <div class="momento-recuerdo">
-                <h3>Recuerdo 1</h3>
-                <img src="recuerdo1.jpg" alt="Recuerdo 1" onclick="openLightbox('recuerdo1.jpg')">
-            </div>
-            <div class="momento-recuerdo">
-                <h3>Recuerdo 2</h3>
-                <img src="recuerdo2.jpg" alt="Recuerdo 2" onclick="openLightbox('recuerdo2.jpg')">
-            </div>
+    <canvas class="confetti" id="confetti"></canvas>
+    <div class="main-content" id="main-content">
+        <button class="theme-toggle" id="theme-toggle" title="Cambiar tema">🌙</button>
+        <div class="landing">
+            <h1>¡FELIZ FELIZ NO CUMPLEAÑOS! ó Fröhlichen Nicht-Geburtstag!</h1>
+            <img src="FotoCuajo.jpg" alt="Cuajo" class="main-photo">
         </div>
-    </section>
-
-    <section id="sorpresa" class="tab">
-        <strong>¡Hola, Cuajo 🏁❤️</strong>
-        <br><br>
-        Tengo una propuesta digna del paddock de Ferrari: <br>
-        Quiero invitarte a ver la nueva película de la Fórmula 1.<br><br>
-        Tú serías la escudería Ferrari, impecable, con clase, y siempre robando miradas…
-        y yo, bueno… yo sería el piloto que solo quiere una vuelta contigo, aunque sea en la curva más cerrada del calendario 😅🏎️💘<br><br>
-        Si te animas, prometo llevar mi pierna buena, comentarios de segundo lugar (porque el primero siempre te lo dejo a ti) y buena compañía en la recta final.
-        Más chistes malos como ese.<br><br>
-        ¿Aceptas esta pole position a mi lado? ✨
-    </section>
-
-    <section id="mensaje" class="tab">
-        <strong>Querida Cuajo,</strong>
-        <br><br>
-        ¡Fröhlichen Nicht-Geburtstag!<br>
-        Hoy no es tu cumpleaños, pero eso no me detiene para celebrarte como si lo fuera.<br><br>
-        Sé que no estuve contigo ese día especial, y créeme que lo he tenido en el corazón desde entonces.
-        A veces la vida nos pone lejos en los momentos que más quisiéramos estar cerca, pero siempre hay formas de compensarlo.<br><br>
-        Este “no cumpleaños” es solo una excusa para decirte que me importas muchísimo.
-        Que me emociona cada día compartir momentos contigo, y que si pudiera retroceder el tiempo, estaría ahí contigo sin pensarlo dos veces.<br><br>
-        Deseo que todo lo bueno que sueñas siga llegando a tu vida, y que nunca te falte un motivo para sonreír.
-        Yo, por mi parte, siempre voy a estar buscando nuevas formas de hacerte sentir especial.<br><br>
-        Brindo por ti, Cuajo. Por lo que eres, por lo que sueñas y por todo lo bonito que aún nos queda por vivir.<br><br>
-        <em>MIT LIEBE, Diego 💖</em>
-    </section>
-
-    <div class="spotify-player">
-        <iframe style="border-radius:12px" 
-            src="https://open.spotify.com/embed/track/2BjRhZ2IJmsO1GRquNldsP?utm_source=generator" 
-            width="300" height="80" frameBorder="0" allowfullscreen="" 
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-            loading="lazy">
-        </iframe>
+        <nav>
+            <ul>
+                <li class="active" onclick="showTab('cumple', this)">🎂 No Cumpleaños</li>
+                <li onclick="showTab('momentos', this)">📸 Momentos</li>
+                <li onclick="showTab('sorpresa', this)">🎁 INVITACIÓN</li>
+                <li onclick="showTab('mensaje', this)">💌 Cartita</li>
+            </ul>
+        </nav>
+        <section id="cumple" class="tab show">
+            <strong>Porque cualquier día es perfecto para celebrarte, Cuajo.</strong>
+        </section>
+        <section id="momentos" class="tab">
+            <div id="momentos">
+                <div class="momento-recuerdo">
+                    <h3>Recuerdo 1</h3>
+                    <img src="recuerdo1.jpg"  onclick="openLightbox('recuerdo1.jpg')">
+                </div>
+                <div class="momento-recuerdo">
+                    <h3>Recuerdo 2</h3>
+                    <img src="recuerdo2.jpg" alt="Recuerdo 2" onclick="openLightbox('recuerdo2.jpg')">
+                </div>
+            </div>
+        </section>
+        <section id="sorpresa" class="tab">
+            <strong>¡Hola, Cuajo 🏁❤️</strong>
+            <br><br>
+            Tengo una propuesta digna del paddock de Ferrari: <br>
+            Quiero invitarte a ver la nueva película de la Fórmula 1.<br><br>
+            Tú serías la escudería Ferrari, impecable, con clase, y siempre robando miradas…
+            y yo, bueno… yo sería el piloto que solo quiere una vuelta contigo, aunque sea en la curva más cerrada del calendario 😅🏎️💘<br><br>
+            Si te animas, prometo llevar mi pierna buena, comentarios de segundo lugar (porque el primero siempre te lo dejo a ti) y buena compañía en la recta final.
+            Más chistes malos como ese.<br><br>
+            ¿Aceptas esta pole position a mi lado? ✨
+        </section>
+        <section id="mensaje" class="tab">
+            <strong>Querida Cuajo,</strong>
+            <br><br>
+            ¡Fröhlichen Nicht-Geburtstag!<br>
+            Hoy no es tu cumpleaños, pero eso no me detiene para celebrarte como si lo fuera.<br><br>
+            Sé que no estuve contigo ese día especial, y créeme que lo he tenido en el corazón desde entonces.
+            A veces la vida nos pone lejos en los momentos que más quisiéramos estar cerca, pero siempre hay formas de compensarlo.<br><br>
+            Este “no cumpleaños” es solo una excusa para decirte que me importas muchísimo.
+            Que me emociona cada día compartir momentos contigo, y que si pudiera retroceder el tiempo, estaría ahí contigo sin pensarlo dos veces.<br><br>
+            Deseo que todo lo bueno que sueñas siga llegando a tu vida, y que nunca te falte un motivo para sonreír.
+            Yo, por mi parte, siempre voy a estar buscando nuevas formas de hacerte sentir especial.<br><br>
+            Brindo por ti, Cuajo. Por lo que eres, por lo que sueñas y por todo lo bonito que aún nos queda por vivir.<br><br>
+            <em>MIT LIEBE, Diego 💖</em>
+        </section>
+        <div class="spotify-player">
+            <iframe style="border-radius:12px" 
+                src="https://open.spotify.com/embed/track/2BjRhZ2IJmsO1GRquNldsP?utm_source=generator" 
+                width="300" height="80" frameBorder="0" allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy">
+            </iframe>
+        </div>
+        <footer>
+            Hecho con 💖 por Diego Sierra · 2025 · Para Cuajo
+        </footer>
     </div>
-
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
         <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
         <img src="" alt="Foto ampliada" id="lightbox-img">
     </div>
-
-    <footer>
-        Hecho con 💖 por Diego Sierra · 2025 · Para Cuajo
-    </footer>
-
     <script>
+        // Splash & Main Reveal
+        setTimeout(() => {
+            document.getElementById('splash').style.display = 'none';
+            document.getElementById('main-content').style.opacity = '1';
+        }, 2700);
+
+        // Confetti Animation
+        window.addEventListener('DOMContentLoaded', () => {
+            // Simple confetti animation
+            const canvas = document.getElementById('confetti');
+            const ctx = canvas.getContext('2d');
+            let w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight;
+            let pieces = Array.from({length: 55}, () => ({
+                x: Math.random() * w,
+                y: Math.random() * -h,
+                r: 6 + Math.random() * 12,
+                d: Math.random() * 55,
+                color: `hsl(${Math.random()*360},90%,60%)`,
+                tilt: Math.random() * 10 - 10,
+                tiltAngle: 0
+            }));
+
+            function drawConfetti() {
+                ctx.clearRect(0,0,w,h);
+                pieces.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+                });
+            }
+            function updateConfetti() {
+                pieces.forEach(p => {
+                    p.y += (Math.cos(p.d) + 2 + p.r/6)/2;
+                    p.x += Math.sin(0.01 * p.d) * 2;
+                    if(p.y > h) {
+                        p.x = Math.random() * w;
+                        p.y = Math.random() * -20;
+                    }
+                });
+            }
+            let confettiActive = true;
+            function animate() {
+                if (confettiActive) {
+                    drawConfetti();
+                    updateConfetti();
+                    requestAnimationFrame(animate);
+                }
+            }
+            animate();
+            setTimeout(() => {
+                confettiActive = false;
+                ctx.clearRect(0,0,w,h);
+                canvas.style.display = "none";
+            }, 2600);
+            window.addEventListener('resize', () => {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            });
+        });
+
         // Tabs
         function showTab(tabId, el) {
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('show'));
@@ -355,7 +461,6 @@
             document.querySelectorAll('nav li').forEach(li => li.classList.remove('active'));
             if(el) el.classList.add('active');
         }
-        // Initial tab
         window.onload = () => showTab('cumple', document.querySelector('nav li'));
 
         // Lightbox
