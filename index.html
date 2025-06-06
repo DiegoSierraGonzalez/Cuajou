@@ -4,318 +4,10 @@
     <meta charset="UTF-8">
     <title>¡FELIZ FELIZ NO CUMPLEAÑOS! ó Fröhlichen Nicht-Geburtstag!</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #ff477e;
-            --secondary: #ffd6e0;
-            --accent: #4c51c6;
-            --bg: linear-gradient(135deg, #ffe5ec 0%, #b8c6db 100%);
-            --bg-dark: linear-gradient(135deg, #232946 0%, #4c51c6 100%);
-            --text: #232946;
-            --text-dark: #f6f6f6;
-            --white: #fff;
-        }
-        body {
-            margin: 0;
-            font-family: 'Montserrat', Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            transition: background 0.6s, color 0.5s;
-            overflow-x: hidden;
-        }
-        body.dark {
-            background: var(--bg-dark);
-            color: var(--text-dark);
-        }
-        .splash {
-            position: fixed;
-            z-index: 10000;
-            left: 0; top: 0; right: 0; bottom: 0;
-            background: linear-gradient(120deg, #ff477e 30%, #4c51c6 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            font-size: 2.2rem;
-            letter-spacing: 1px;
-            font-weight: bold;
-            opacity: 1;
-            animation: fadeOutSplash 1.5s 2.2s forwards;
-        }
-        .splash h1 {
-            margin: 0;
-            padding: 0;
-            text-shadow: 0 4px 24px #23294633;
-        }
-        .splash p {
-            font-size: 1.2rem;
-            margin-top: 1.3rem;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-        }
-        @keyframes fadeOutSplash {
-            to { opacity: 0; pointer-events: none; }
-        }
-        .main-content {
-            opacity: 0;
-            animation: fadeInMain 1.4s 2.3s forwards;
-        }
-        @keyframes fadeInMain {
-            to { opacity: 1; }
-        }
-        .landing {
-            text-align: center;
-            padding: 2.5rem 1rem 1.5rem 1rem;
-            animation: fadeIn 1.3s 2.3s both;
-        }
-        .landing h1 {
-            font-size: 2.1rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            background: linear-gradient(90deg, #ff477e 40%, #4c51c6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .main-photo {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 5px solid var(--primary);
-            box-shadow: 0 8px 32px rgba(76, 81, 198, 0.08);
-            object-fit: cover;
-            background: var(--white);
-            transition: border 0.3s;
-        }
-        body.dark .main-photo {
-            border: 5px solid var(--accent);
-        }
-        .theme-toggle {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            background: var(--primary);
-            border: none;
-            color: #fff;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            font-size: 1.4rem;
-            cursor: pointer;
-            box-shadow: 0 2px 10px #ff477e33;
-            transition: background 0.3s;
-            z-index: 99;
-        }
-        .theme-toggle:hover {
-            background: var(--accent);
-        }
-        nav {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-        nav ul {
-            padding: 0;
-            margin: 0;
-            display: flex;
-            list-style: none;
-            gap: 1.25rem;
-        }
-        nav li {
-            background: var(--primary);
-            color: var(--white);
-            padding: 0.7rem 1.5rem;
-            border-radius: 2rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.18s;
-            box-shadow: 0 2px 10px rgba(255, 71, 126, 0.07);
-            font-size: 1.07rem;
-            user-select: none;
-        }
-        nav li.active, nav li:hover {
-            background: var(--accent);
-            transform: translateY(-2px) scale(1.05);
-        }
-        section.tab {
-            display: none;
-            max-width: 600px;
-            margin: 0 auto 2rem auto;
-            background: var(--white);
-            border-radius: 1.5rem;
-            box-shadow: 0 4px 18px rgba(44, 52, 99, 0.06);
-            padding: 2rem 1.5rem 1.5rem 1.5rem;
-            font-size: 1.06rem;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.6s, transform 0.7s;
-            animation: fadeIn 1.3s 2.3s both;
-        }
-        section.tab.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-        #momentos {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-        }
-        .momento-recuerdo {
-            background: var(--secondary);
-            border-radius: 1.2rem;
-            box-shadow: 0 2px 8px rgba(255, 71, 126, 0.06);
-            padding: 1.2rem 1.2rem 1rem 1.2rem;
-            text-align: center;
-            width: 185px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: box-shadow 0.2s, transform 0.18s;
-            animation: fadeInCard 1.5s 2.5s both;
-        }
-        .momento-recuerdo:hover {
-            box-shadow: 0 6px 24px rgba(76, 81, 198, 0.12);
-            transform: translateY(-4px) scale(1.04) rotate(-1deg);
-        }
-        .momento-recuerdo h3 {
-            margin: 0 0 0.6rem 0;
-            color: var(--accent);
-            font-size: 1.08rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        .momento-recuerdo img {
-            width: 150px;
-            height: 150px;
-            border-radius: 0.8rem;
-            object-fit: cover;
-            margin-bottom: 0.2rem;
-            box-shadow: 0 2px 8px #ff477e22;
-            transition: transform 0.2s;
-            cursor: pointer;
-        }
-        .momento-recuerdo img:hover {
-            transform: scale(1.13) rotate(-2deg);
-        }
-        /* Lightbox */
-        .lightbox {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0; top: 0; right:0; bottom:0;
-            background: rgba(34, 34, 34, 0.93);
-            justify-content: center;
-            align-items: center;
-        }
-        .lightbox.show {
-            display: flex;
-            animation: fadeIn 0.6s;
-        }
-        .lightbox img {
-            max-width: 90vw;
-            max-height: 80vh;
-            border-radius: 1.2rem;
-            box-shadow: 0 6px 36px #ff477e44;
-            border: 5px solid #fff;
-        }
-        .lightbox-close {
-            position: absolute;
-            top: 40px;
-            right: 60px;
-            font-size: 2.5rem;
-            color: #fff;
-            background: none;
-            border: none;
-            cursor: pointer;
-            z-index: 10000;
-            text-shadow: 0 2px 12px #000;
-        }
-        /* Confetti */
-        .confetti {
-            position: fixed;
-            pointer-events: none;
-            left: 0; top: 0; width: 100vw; height: 100vh;
-            z-index: 10001;
-        }
-        /* Spotify */
-        .spotify-player {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-        /* Footer */
-        footer {
-            width: 100%;
-            text-align: center;
-            padding: 1.5rem 0 .7rem 0;
-            background: transparent;
-            color: #b4b4b4;
-            font-size: 1rem;
-            letter-spacing: 0.3px;
-        }
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(60px);}
-            to   { opacity: 1; transform: translateY(0);}
-        }
-        @keyframes fadeInCard {
-            from { opacity: 0; transform: scale(0.92);}
-            to   { opacity: 1; transform: scale(1);}
-        }
-        /* Responsive */
-        @media (max-width: 700px) {
-            .landing h1 {
-                font-size: 1.33rem;
-            }
-            .main-photo {
-                width: 110px;
-                height: 110px;
-            }
-            section.tab {
-                padding: 1.3rem 0.7rem 1rem 0.7rem;
-            }
-            #momentos {
-                gap: 1rem;
-            }
-            .momento-recuerdo {
-                width: 95vw;
-                max-width: 330px;
-                padding: 0.9rem 0.3rem 0.6rem 0.3rem;
-            }
-            .momento-recuerdo img {
-                width: 110px;
-                height: 110px;
-            }
-            .lightbox-close {
-                right: 18px;
-                top: 12px;
-                font-size: 2rem;
-            }
-        }
-        body.dark section.tab,
-        body.dark .momento-recuerdo {
-            background: #30336b;
-            color: #f6f6f6;
-        }
-        body.dark .momento-recuerdo h3 {
-            color: #ffd6e0;
-        }
-        body.dark nav li,
-        body.dark .theme-toggle {
-            background: var(--accent);
-        }
-        body.dark nav li.active, body.dark nav li:hover {
-            background: var(--primary);
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Splash -->
+    <!-- Pantalla de bienvenida tipo splash -->
     <div class="splash" id="splash">
         <h1>🎉 ¡Bienvenida, Cuajo! 🎉</h1>
         <p>Hoy no es tu cumpleaños...<br>¡pero sí una experiencia para celebrarte!</p>
@@ -331,6 +23,8 @@
             <ul>
                 <li class="active" onclick="showTab('cumple', this)">🎂 No Cumpleaños</li>
                 <li onclick="showTab('momentos', this)">📸 Momentos</li>
+                <li onclick="showTab('arbol', this)">🌳 Árbol de Recuerdos</li>
+                <li onclick="showTab('minijuego', this)">🎲 Minijuego</li>
                 <li onclick="showTab('sorpresa', this)">🎁 INVITACIÓN</li>
                 <li onclick="showTab('mensaje', this)">💌 Cartita</li>
             </ul>
@@ -342,13 +36,37 @@
             <div id="momentos">
                 <div class="momento-recuerdo">
                     <h3>Recuerdo 1</h3>
-                    <img src="recuerdo1.jpg"  onclick="openLightbox('recuerdo1.jpg')">
+                    <img src="recuerdo1.jpg" alt="Recuerdo 1" onclick="openLightbox('recuerdo1.jpg')">
                 </div>
                 <div class="momento-recuerdo">
                     <h3>Recuerdo 2</h3>
                     <img src="recuerdo2.jpg" alt="Recuerdo 2" onclick="openLightbox('recuerdo2.jpg')">
                 </div>
             </div>
+        </section>
+        <section id="arbol" class="tab">
+            <h2 class="arbol-titulo">Árbol de Recuerdos</h2>
+            <svg id="arbol-svg" viewBox="0 0 400 400" width="320" height="320">
+                <!-- Tronco -->
+                <rect x="185" y="200" width="30" height="100" fill="#9C6615"/>
+                <!-- Ramas principales -->
+                <path d="M200 220 Q170 160 100 140" stroke="#9C6615" stroke-width="8" fill="none"/>
+                <path d="M200 230 Q210 170 300 130" stroke="#9C6615" stroke-width="8" fill="none"/>
+                <!-- Hojas/Recuerdos -->
+                <circle class="hoja" id="hoja1" cx="100" cy="140" r="22" fill="#8fd19e" data-recuerdo="¡Aquel picnic en el parque!"><title>Recuerdo especial 1</title></circle>
+                <circle class="hoja" id="hoja2" cx="300" cy="130" r="22" fill="#8ecae6" data-recuerdo="Nuestra foto en la feria"><title>Recuerdo especial 2</title></circle>
+                <circle class="hoja" id="hoja3" cx="160" cy="110" r="18" fill="#fcbf49" data-recuerdo="El día que reímos hasta llorar"><title>Recuerdo especial 3</title></circle>
+                <circle class="hoja" id="hoja4" cx="250" cy="90" r="18" fill="#ffb4a2" data-recuerdo="Un atardecer inolvidable"><title>Recuerdo especial 4</title></circle>
+            </svg>
+            <div id="recuerdo-popup" class="recuerdo-popup"></div>
+            <p class="arbol-tip">Haz clic en cada hoja para descubrir un recuerdo.</p>
+        </section>
+        <section id="minijuego" class="tab">
+            <h2>Rompe los Globos 🎈</h2>
+            <button id="startGameBtn">¡Comenzar Juego!</button>
+            <div id="gameArea" class="game-area"></div>
+            <p id="score" class="score">Puntaje: 0</p>
+            <p id="gameMessage" class="game-message"></p>
         </section>
         <section id="sorpresa" class="tab">
             <strong>¡Hola, Cuajo 🏁❤️</strong>
@@ -376,10 +94,10 @@
             <em>MIT LIEBE, Diego 💖</em>
         </section>
         <div class="spotify-player">
-            <iframe style="border-radius:12px" 
-                src="https://open.spotify.com/embed/track/2BjRhZ2IJmsO1GRquNldsP?utm_source=generator" 
-                width="300" height="80" frameBorder="0" allowfullscreen="" 
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            <iframe style="border-radius:12px"
+                src="https://open.spotify.com/embed/track/2BjRhZ2IJmsO1GRquNldsP?utm_source=generator"
+                width="300" height="80" frameBorder="0" allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                 loading="lazy">
             </iframe>
         </div>
@@ -481,6 +199,74 @@
             document.body.classList.toggle('dark');
             themeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
         };
+
+        // Árbol de recuerdos interactividad
+        const hojas = document.querySelectorAll('.hoja');
+        const popup = document.getElementById('recuerdo-popup');
+        hojas.forEach(hoja => {
+            hoja.addEventListener('click', function(e){
+                const mensaje = hoja.getAttribute('data-recuerdo');
+                popup.textContent = mensaje;
+                popup.style.display = 'block';
+                popup.style.left = (e.clientX - 50) + 'px';
+                popup.style.top = (e.clientY - 70) + 'px';
+                setTimeout(() => popup.style.display = 'none', 2600);
+            });
+        });
+
+        // Minijuego: Rompe los Globos
+        const startBtn = document.getElementById('startGameBtn');
+        const gameArea = document.getElementById('gameArea');
+        const scoreText = document.getElementById('score');
+        const gameMessage = document.getElementById('gameMessage');
+        let score = 0;
+        let gameActive = false;
+        let balloons = [];
+        let gameTimer;
+
+        function randomColor() {
+            const colors = ['#ff477e', '#8ecae6', '#8fd19e', '#fcbf49', '#ffb4a2', '#b8c6db'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            balloon.style.left = Math.random() * 85 + '%';
+            balloon.style.background = randomColor();
+            balloon.addEventListener('click', function pop() {
+                if (!gameActive) return;
+                balloon.classList.add('pop');
+                setTimeout(()=>gameArea.removeChild(balloon), 300);
+                balloon.removeEventListener('click', pop);
+                score++;
+                scoreText.textContent = 'Puntaje: ' + score;
+                if(score === 10) endGame();
+            });
+            gameArea.appendChild(balloon);
+            balloons.push(balloon);
+            setTimeout(()=>{
+                if(gameArea.contains(balloon)) gameArea.removeChild(balloon);
+            }, 4000);
+        }
+        function endGame() {
+            gameActive = false;
+            clearInterval(gameTimer);
+            balloons.forEach(b => b.remove());
+            balloons = [];
+            gameMessage.textContent = '¡Felicidades! Puntaje: ' + score;
+            startBtn.style.display = 'inline-block';
+        }
+        if(startBtn) {
+            startBtn.onclick = () => {
+                score = 0;
+                scoreText.textContent = 'Puntaje: 0';
+                gameMessage.textContent = '';
+                startBtn.style.display = 'none';
+                gameActive = true;
+                gameTimer = setInterval(()=>{ if(gameActive) createBalloon(); }, 650);
+                setTimeout(()=>{ if(gameActive) endGame(); }, 17000);
+            };
+        }
     </script>
 </body>
 </html>
