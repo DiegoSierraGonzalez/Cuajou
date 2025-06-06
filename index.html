@@ -638,51 +638,6 @@
             document.body.classList.toggle('dark');
             themeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
         };
-
-       <!-- Coloca esto justo antes del </body> o en algún lugar visible de tu HTML principal -->
-<div id="rompemuros-container" style="position:fixed;bottom:40px;left:50%;transform:translateX(-50%);z-index:12000;">
-  <button id="rompemuros-btn" style="padding:1.1rem 2.2rem;font-size:1.2rem;font-family:inherit;background:#232946;color:#fff;border:none;border-radius:2.5rem;box-shadow:0 4px 24px #23294644;cursor:pointer;font-weight:700;transition:background 0.3s;">No presiones aquí 😈</button>
-</div>
-
-<!-- Capa de grieta y mensaje oculto -->
-<div id="rompemuros-overlay" style="display:none;position:fixed;z-index:13000;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.18);justify-content:center;align-items:center;">
-  <div style="position:absolute;top:0;left:0;width:100vw;height:100vh;pointer-events:none;">
-    <!-- SVG de grietas animadas -->
-    <svg id="grieta-svg" width="100vw" height="100vh" style="width:100vw;height:100vh;pointer-events:none;" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path id="grieta1" d="M960,40 Q970,300 850,400 Q1100,600 1050,900" stroke="#1a1a1a" stroke-width="10" stroke-linecap="round" stroke-dasharray="20 40" opacity="0"/>
-      <path id="grieta2" d="M960,180 Q1200,400 1120,800" stroke="#232946" stroke-width="8" stroke-linecap="round" stroke-dasharray="14 28" opacity="0"/>
-      <path id="grieta3" d="M960,80 Q800,300 1000,700" stroke="#ff477e" stroke-width="7" stroke-linecap="round" stroke-dasharray="12 22" opacity="0"/>
-    </svg>
-  </div>
-  <!-- Mensaje secreto -->
-  <div id="rompemuros-mensaje" style="display:none;position:relative;background:#fff;color:#232946;padding:2.3rem 2rem 2rem 2rem;border-radius:1.5rem;box-shadow:0 8px 36px #23294633;font-size:1.35rem;max-width:90vw;text-align:center;">
-    <span style="font-size:2.2rem;">💋</span><br>
-    <strong>Ups… ¡Ya no hay vuelta atrás!</strong><br>
-    Ahora tienes que darme un beso cuando me veas. 😘<br>
-    <button onclick="document.getElementById('rompemuros-overlay').style.display='none'" style="margin-top:1.3rem;padding:0.7rem 2rem;border:none;background:#ff477e;color:#fff;border-radius:2rem;font-weight:700;font-size:1.1rem;box-shadow:0 2px 10px #ff477e44;cursor:pointer;">Cerrar</button>
-  </div>
-</div>
-
-<script>
-  // Animación de grieta y mensaje
-  document.getElementById('rompemuros-btn').onclick = function() {
-    document.getElementById('rompemuros-overlay').style.display = 'flex';
-    // Animar las grietas (SVG)
-    setTimeout(() => { document.getElementById('grieta1').style.opacity = "1"; }, 100);
-    setTimeout(() => { document.getElementById('grieta2').style.opacity = "1"; }, 480);
-    setTimeout(() => { document.getElementById('grieta3').style.opacity = "1"; }, 780);
-    // Mostrar el mensaje con retardo para más drama
-    setTimeout(() => {
-      document.getElementById('rompemuros-mensaje').style.display = 'block';
-    }, 1400);
-    // Opcional: vibrar el móvil
-    if (window.navigator.vibrate) window.navigator.vibrate([100, 50, 100]);
-  };
-
-  // Opcional: cerrar la capa al hacer click fuera del mensaje
-  document.getElementById('rompemuros-overlay').onclick = function(e) {
-    if (e.target === this) this.style.display = 'none';
-  };
     </script>
 </body>
 </html>
