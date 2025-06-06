@@ -638,6 +638,24 @@
             document.body.classList.toggle('dark');
             themeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
         };
+
+         // ROMPEMUROS ANIMACIÓN
+        document.getElementById('rompemuros-btn').onclick = function() {
+            document.getElementById('rompemuros-overlay').style.display = 'flex';
+            // Animar las grietas (SVG)
+            setTimeout(() => { document.getElementById('grieta1').style.opacity = "1"; }, 100);
+            setTimeout(() => { document.getElementById('grieta2').style.opacity = "1"; }, 480);
+            setTimeout(() => { document.getElementById('grieta3').style.opacity = "1"; }, 780);
+            // Mostrar el mensaje con retardo para más drama
+            setTimeout(() => {
+              document.getElementById('rompemuros-mensaje').style.display = 'block';
+            }, 1400);
+            // Opcional: vibrar el móvil
+            if (window.navigator.vibrate) window.navigator.vibrate([100, 50, 100]);
+        };
+        document.getElementById('rompemuros-overlay').onclick = function(e) {
+            if (e.target === this) this.style.display = 'none';
+        };
     </script>
 </body>
 </html>
