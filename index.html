@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>¡FELIZ FELIZ NO CUMPLEAÑOS! ó Fröhlichen Nicht-Geburtstag!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- ADAPTACIÓN MÓVIL -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -123,6 +124,7 @@
             display: flex;
             list-style: none;
             gap: 1.25rem;
+            flex-wrap: wrap;
         }
         nav li {
             background: var(--primary);
@@ -135,6 +137,7 @@
             box-shadow: 0 2px 10px rgba(255, 71, 126, 0.07);
             font-size: 1.07rem;
             user-select: none;
+            white-space: nowrap;
         }
         nav li.active, nav li:hover {
             background: var(--accent);
@@ -159,7 +162,7 @@
             opacity: 1;
             transform: translateY(0);
         }
-        #momentos {
+        #momentos-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -198,6 +201,8 @@
             box-shadow: 0 2px 8px #ff477e22;
             transition: transform 0.2s;
             cursor: pointer;
+            max-width: 100%;
+            height: auto;
         }
         .momento-recuerdo img:hover {
             transform: scale(1.13) rotate(-2deg);
@@ -262,9 +267,10 @@
         .timeline-event img {
           display: block;
           margin-top: 0.7rem;
-          max-width: 120px;
+          max-width: 100%;
           border-radius: 0.6rem;
           box-shadow: 0 2px 8px #4c51c666;
+          height: auto;
         }
         .timeline-event::before {
           content: '';
@@ -283,93 +289,6 @@
           right: auto;
         }
         @media (max-width: 700px) {
-          .timeline-event, .timeline-event.right, .timeline-event.left {
-            width: 100%;
-            left: 0 !important;
-            padding: 1.2rem 1rem;
-          }
-          .timeline::after {
-            left: 20px;
-          }
-          .timeline-event .content {
-            margin-left: 30px;
-          }
-          .timeline-event.right .content {
-            margin-left: 30px;
-          }
-          .timeline-event::before,
-          .timeline-event.right::before {
-            left: 0;
-            right: auto;
-          }
-        }
-        /* Lightbox */
-        .lightbox {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0; top: 0; right:0; bottom:0;
-            background: rgba(34, 34, 34, 0.93);
-            justify-content: center;
-            align-items: center;
-        }
-        .lightbox.show {
-            display: flex;
-            animation: fadeIn 0.6s;
-        }
-        .lightbox img {
-            max-width: 90vw;
-            max-height: 80vh;
-            border-radius: 1.2rem;
-            box-shadow: 0 6px 36px #ff477e44;
-            border: 5px solid #fff;
-        }
-        .lightbox-close {
-            position: absolute;
-            top: 40px;
-            right: 60px;
-            font-size: 2.5rem;
-            color: #fff;
-            background: none;
-            border: none;
-            cursor: pointer;
-            z-index: 10000;
-            text-shadow: 0 2px 12px #000;
-        }
-        /* Confetti */
-        .confetti {
-            position: fixed;
-            pointer-events: none;
-            left: 0; top: 0; width: 100vw; height: 100vh;
-            z-index: 10001;
-        }
-        /* Spotify */
-        .spotify-player {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-        /* Footer */
-        footer {
-            width: 100%;
-            text-align: center;
-            padding: 1.5rem 0 .7rem 0;
-            background: transparent;
-            color: #b4b4b4;
-            font-size: 1rem;
-            letter-spacing: 0.3px;
-        }
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(60px);}
-            to   { opacity: 1; transform: translateY(0);}
-        }
-        @keyframes fadeInCard {
-            from { opacity: 0; transform: scale(0.92);}
-            to   { opacity: 1; transform: scale(1);}
-        }
-        /* Responsive */
-        @media (max-width: 700px) {
             .landing h1 {
                 font-size: 1.33rem;
             }
@@ -380,8 +299,10 @@
             section.tab {
                 padding: 1.3rem 0.7rem 1rem 0.7rem;
             }
-            #momentos {
+            #momentos-container {
                 gap: 1rem;
+                flex-direction: column;
+                align-items: center;
             }
             .momento-recuerdo {
                 width: 95vw;
@@ -389,13 +310,42 @@
                 padding: 0.9rem 0.3rem 0.6rem 0.3rem;
             }
             .momento-recuerdo img {
-                width: 110px;
-                height: 110px;
+                width: 100%;
+                max-width: 230px;
+                height: auto;
             }
             .lightbox-close {
                 right: 18px;
                 top: 12px;
                 font-size: 2rem;
+            }
+            .timeline-event, .timeline-event.right, .timeline-event.left {
+                width: 100%;
+                left: 0 !important;
+                padding: 1.2rem 1rem;
+            }
+            .timeline::after {
+                left: 20px;
+            }
+            .timeline-event .content {
+                margin-left: 30px;
+            }
+            .timeline-event.right .content {
+                margin-left: 30px;
+            }
+            .timeline-event::before,
+            .timeline-event.right::before {
+                left: 0;
+                right: auto;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+            nav li {
+                font-size: 0.95rem;
+                padding: 0.45rem 1rem;
             }
         }
         body.dark section.tab,
@@ -441,16 +391,7 @@
             <strong>Porque cualquier día es perfecto para celebrarte, Cuajo.</strong>
         </section>
         <section id="momentos" class="tab">
-            <div id="momentos">
-                <div class="momento-recuerdo">
-                    <h3>Recuerdo 1</h3>
-                    <img src="recuerdo1.jpg"  onclick="openLightbox('recuerdo1.jpg')">
-                </div>
-                <div class="momento-recuerdo">
-                    <h3>Recuerdo 2</h3>
-                    <img src="recuerdo2.jpg" alt="Recuerdo 2" onclick="openLightbox('recuerdo2.jpg')">
-                </div>
-            </div>
+            <div id="momentos-container"></div>
         </section>
         <!-- NUEVA SECCIÓN DE LÍNEA DEL TIEMPO -->
         <section id="timeline" class="tab">
@@ -592,12 +533,42 @@
             });
         });
 
+        // Momentos - renderizado dinámico
+        const recuerdos = [
+            {
+                titulo: "Recuerdo 1",
+                img: "recuerdo1.jpg"
+            },
+            {
+                titulo: "Recuerdo 2",
+                img: "recuerdo2.jpg"
+            }
+        ];
+
+        let momentosRendered = false;
+
+        function renderMomentos() {
+            if (momentosRendered) return;
+            const cont = document.getElementById('momentos-container');
+            recuerdos.forEach(r => {
+                const div = document.createElement('div');
+                div.className = "momento-recuerdo";
+                div.innerHTML = `
+                    <h3>${r.titulo}</h3>
+                    <img src="${r.img}" alt="${r.titulo}" onclick="openLightbox('${r.img}')">
+                `;
+                cont.appendChild(div);
+            });
+            momentosRendered = true;
+        }
+
         // Tabs
         function showTab(tabId, el) {
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('show'));
             document.getElementById(tabId).classList.add('show');
             document.querySelectorAll('nav li').forEach(li => li.classList.remove('active'));
             if(el) el.classList.add('active');
+            if(tabId === 'momentos') renderMomentos();
         }
         window.onload = () => showTab('cumple', document.querySelector('nav li'));
 
