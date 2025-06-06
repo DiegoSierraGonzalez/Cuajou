@@ -28,6 +28,16 @@
             background: var(--bg-dark);
             color: var(--text-dark);
         }
+        /* Shake/tremor animation */
+        .shake {
+          animation: shakeAnim 0.7s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes shakeAnim {
+          10%, 90% { transform: translate3d(-2px, 2px, 0); }
+          20%, 80% { transform: translate3d(-4px, -4px, 0); }
+          30%, 50%, 70% { transform: translate3d(4px, 4px, 0); }
+          40%, 60% { transform: translate3d(-4px, 2px, 0); }
+        }
         .splash {
             position: fixed;
             z-index: 10000;
@@ -556,19 +566,31 @@
       </div>
     </div>
     <script>
-        // Frases aleatorias para el splash
-        const frasesSplash = [
-            "Eres el plot twist favorito de mi vida 💖",
-            "Si fueras Ferrari, yo sería tu mecánico personal 🛠️🏎️",
-            "¡Hoy no es tu cumpleaños, pero sí mi día favorito porque existes!",
-            "¿Sabías que tienes sonrisa de pole position?"
-        ];
-        // Selecciona el <p> dentro del splash y cambia su contenido al azar
+        // Detectar y aplicar modo oscuro/claro según preferencia del sistema
+        function applySystemTheme() {
+            const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.body.classList.toggle('dark', isDark);
+            document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+        }
+        // Aplicar sólo en el primer load, para no sobreescribir si el usuario ya cambió manualmente
         document.addEventListener('DOMContentLoaded', function() {
+            // Modo oscuro/claro automático
+            applySystemTheme();
+            // Si el usuario cambia el sistema, se actualiza
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applySystemTheme);
+
+            // Splash frase aleatoria
             const splashP = document.querySelector('.splash p');
+            const frasesSplash = [
+                "Eres el plot twist favorito de mi vida 💖",
+                "Si fueras Ferrari, yo sería tu mecánico personal 🛠️🏎️",
+                "¡Hoy no es tu cumpleaños, pero sí mi día favorito porque existes!",
+                "¿Sabías que tienes sonrisa de pole position?"
+            ];
             if (splashP) {
                 splashP.innerHTML = frasesSplash[Math.floor(Math.random() * frasesSplash.length)] + "<br>¡POR UNA VIDA DESPEINADOS, ICH LIEBE DICH!";
             }
+
             // ROMPEMUROS
             var btn = document.getElementById('rompemuros-btn');
             var overlay = document.getElementById('rompemuros-overlay');
@@ -582,6 +604,9 @@
               grieta2.style.opacity = "0";
               grieta3.style.opacity = "0";
               mensaje.style.display = "none";
+              // Efecto de temblor
+              document.body.classList.add('shake');
+              setTimeout(() => { document.body.classList.remove('shake'); }, 700);
               setTimeout(() => { grieta1.style.opacity = "1"; }, 100);
               setTimeout(() => { grieta2.style.opacity = "1"; }, 480);
               setTimeout(() => { grieta3.style.opacity = "1"; }, 780);
@@ -601,7 +626,6 @@
 
         // Confetti Animation
         window.addEventListener('DOMContentLoaded', () => {
-            // Simple confetti animation
             const canvas = document.getElementById('confetti');
             const ctx = canvas.getContext('2d');
             let w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight;
@@ -675,11 +699,11 @@
             }
         }
 
-        // Theme toggle
+        // Theme toggle manual
         const themeBtn = document.getElementById('theme-toggle');
         themeBtn.onclick = () => {
-            document.body.classList.toggle('dark');
-            themeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+            const isDark = document.body.classList.toggle('dark');
+            themeBtn.textContent = isDark ? '☀️' : '🌙';
         };
     </script>
 </body>
