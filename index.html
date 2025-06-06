@@ -2,7 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡FELIZ FELIZ NO CUMPLEAÑOS! ó Fröhlichen Nicht-Geburtstag!</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -42,6 +44,7 @@
             letter-spacing: 1px;
             font-weight: bold;
             opacity: 1;
+            transition: opacity 0.7s;
             animation: fadeOutSplash 1.5s 2.2s forwards;
         }
         .splash h1 {
@@ -419,14 +422,14 @@
     <!-- Splash -->
     <div class="splash" id="splash">
         <h1>🎉 ¡Bienvenida, Cuajo! 🎉</h1>
-        <p>Hoy no es tu cumpleaños...<br>¡pero sí una experiencia para celebrarte!</p>
+        <p>Me gusta pensar que esta página es un reflejo de lo que eres para mí: especial, única y llena de luz...<br>¡Por una vida despeinados!</p>
     </div>
     <canvas class="confetti" id="confetti"></canvas>
     <div class="main-content" id="main-content">
         <button class="theme-toggle" id="theme-toggle" title="Cambiar tema">🌙</button>
         <div class="landing">
             <h1>¡FELIZ FELIZ NO CUMPLEAÑOS! ó Fröhlichen Nicht-Geburtstag!</h1>
-            <img src="FotoCuajo.jpg" alt="Cuajo" class="main-photo">
+            <img src="FotoCuajo.jpg" alt="Foto de Cuajo" class="main-photo" onerror="this.src='default.jpg'">
         </div>
         <nav>
             <ul>
@@ -444,11 +447,11 @@
             <div id="momentos">
                 <div class="momento-recuerdo">
                     <h3>Recuerdo 1</h3>
-                    <img src="recuerdo1.jpg"  onclick="openLightbox('recuerdo1.jpg')">
+                    <img src="recuerdo1.jpg" alt="Recuerdo 1" onclick="openLightbox('recuerdo1.jpg')" onerror="this.src='default.jpg'">
                 </div>
                 <div class="momento-recuerdo">
                     <h3>Recuerdo 2</h3>
-                    <img src="recuerdo2.jpg" alt="Recuerdo 2" onclick="openLightbox('recuerdo2.jpg')">
+                    <img src="recuerdo2.jpg" alt="Recuerdo 2" onclick="openLightbox('recuerdo2.jpg')" onerror="this.src='default.jpg'">
                 </div>
             </div>
         </section>
@@ -468,7 +471,7 @@
                 <h3>Primera cita</h3>
                 <span class="date">5 junio 2025</span>
                 <p>El café, los retos y las risas. ¡Inolvidable!</p>
-                <img src="FirstDate.png" alt="Primera cita">
+                <img src="FirstDate.png" alt="Primera cita" onerror="this.src='default.jpg'">
               </div>
             </div>
             <div class="timeline-event left">
@@ -476,7 +479,7 @@
                 <h3>Viaje juntos</h3>
                 <span class="date">20 May 2023</span>
                 <p>Nuestra primera aventura fuera de la ciudad, ¡qué recuerdos!</p>
-                <img src="foto_viaje.jpg" alt="Viaje juntos">
+                <img src="foto_viaje.jpg" alt="Viaje juntos" onerror="this.src='default.jpg'">
               </div>
             </div>
             <div class="timeline-event right">
@@ -531,10 +534,13 @@
         <img src="" alt="Foto ampliada" id="lightbox-img">
     </div>
     <script>
-        // Splash & Main Reveal
+        // Splash & Main Reveal con fade out suave
         setTimeout(() => {
-            document.getElementById('splash').style.display = 'none';
-            document.getElementById('main-content').style.opacity = '1';
+            document.getElementById('splash').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('splash').style.display = 'none';
+                document.getElementById('main-content').style.opacity = '1';
+            }, 700); // espera el fade
         }, 2700);
 
         // Confetti Animation
@@ -613,11 +619,18 @@
             }
         }
 
-        // Theme toggle
+        // Theme toggle con persistencia en localStorage
         const themeBtn = document.getElementById('theme-toggle');
+        // Al cargar, checa el localStorage
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark');
+            themeBtn.textContent = '☀️';
+        }
         themeBtn.onclick = () => {
             document.body.classList.toggle('dark');
-            themeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+            const isDark = document.body.classList.contains('dark');
+            themeBtn.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         };
     </script>
 </body>
