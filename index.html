@@ -20,6 +20,16 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            gap: 30px;
+        }
+        .momento-recuerdo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .momento-recuerdo h3 {
+            color: #222;
+            margin-bottom: 6px;
         }
     </style>
 </head>
@@ -41,11 +51,14 @@
     <section id="cumple" class="tab" style="display: block;">Porque cualquier día es perfecto para celebrarte, Cuajo.</section>
     <section id="momentos" class="tab">
         <div id="momentos">
-            <!-- Agregar las fotos aquí -->
-            <img src="WhatsApp_Image_2025-05-06_at_20.43.05.jpg" alt="Recuerdo 1">
-            <img src="WhatsApp_Image_2025-05-07_at_19.02.48.jpg" alt="Recuerdo 2">
-            <img src="WhatsApp_Image_2025-05-06_at_19.22.03.jpg" alt="Recuerdo 3">
-            <img src="foto4.jpg" alt="Recuerdo 4">
+            <div class="momento-recuerdo">
+                <h3>Recuerdo 1</h3>
+                <img src="WhatsApp_Image_2025-05-08_at_19.22.03.jpg" alt="Recuerdo 1">
+            </div>
+            <div class="momento-recuerdo">
+                <h3>Recuerdo 2</h3>
+                <img src="WhatsApp_Image_2025-05-06_at_20.43.05.jpg" alt="Recuerdo 2">
+            </div>
         </div>
     </section>
     <section id="sorpresa" class="tab">
