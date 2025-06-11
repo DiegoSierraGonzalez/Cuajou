@@ -19,30 +19,22 @@
 body {
     margin: 0;
     font-family: 'Montserrat', Arial, sans-serif;
-    background: var(--bg), url('Fondo.png') no-repeat center center fixed;
+    background: var(--bg), url('Fondo.png') no-repeat center center fixed, #ffe5ec;
     background-size: cover;
     color: #232946;
     text-align: center;
     min-height: 100vh;
     transition: background 0.5s, color 0.5s;
 }
+
+/* Fondo en dark mode también con imagen y gradiente oscuro */
 body.dark {
-    background: var(--bg-dark);
+    background: var(--bg-dark), url('Fondo.png') no-repeat center center fixed, #232946;
+    background-size: cover;
     color: var(--text-dark);
 }
-/* ... Resto de tu CSS igual ... */
-.landing {
-    background: linear-gradient(to bottom right, var(--primary), var(--secondary));
-    padding: 30px 20px;
-}
-.landing h1 {
-    font-size: 2.1rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    background: linear-gradient(90deg, #ff477e 40%, #4c51c6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+
+/* Mejoras en la foto principal */
 .main-photo {
     width: 150px;
     height: 150px;
@@ -52,11 +44,17 @@ body.dark {
     border: 5px solid var(--primary);
     object-fit: cover;
     background: var(--white);
-    transition: border 0.3s;
+    transition: border 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+.main-photo:hover {
+    transform: scale(1.07) rotate(3deg);
+    box-shadow: 0 8px 24px rgba(255,71,126,0.15);
 }
 body.dark .main-photo {
     border: 5px solid var(--accent);
 }
+
+/* Botón de tema */
 .theme-toggle {
     position: fixed;
     top: 1rem;
@@ -76,6 +74,8 @@ body.dark .main-photo {
 .theme-toggle:hover {
     background: var(--accent);
 }
+
+/* Navegación */
 nav ul {
     list-style: none;
     display: flex;
@@ -103,6 +103,24 @@ nav li.active, nav li:hover {
     background: var(--accent);
     transform: translateY(-2px) scale(1.05);
 }
+
+/* Landing */
+.landing {
+    background: linear-gradient(to bottom right, var(--primary), var(--secondary));
+    padding: 30px 20px;
+}
+.landing h1 {
+    font-size: 2.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #ff477e 40%, #4c51c6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* Animación de entrada */
+    animation: fadeIn 1.3s 0.2s both;
+}
+
+/* Secciones principales */
 section.tab {
     display: none;
     max-width: 600px;
@@ -122,6 +140,8 @@ section.tab.show {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* Tarjetas de momentos */
 #momentos-container {
     display: flex;
     flex-wrap: wrap;
@@ -166,6 +186,7 @@ section.tab.show {
 .momento-recuerdo img:hover {
     transform: scale(1.13) rotate(-2deg);
 }
+
 /* Lightbox */
 .lightbox {
     display: none;
@@ -199,6 +220,8 @@ section.tab.show {
     z-index: 10000;
     text-shadow: 0 2px 12px #000;
 }
+
+/* Spotify player */
 .spotify-player {
     display: flex;
     justify-content: center;
@@ -213,13 +236,8 @@ section.tab.show {
     min-width: 180px;
     display: block;
 }
-@media (max-width: 500px) {
-    .spotify-player iframe {
-        width: 100%;
-        min-width: 0;
-        max-width: 100vw;
-    }
-}
+
+/* Footer */
 footer {
     width: 100%;
     text-align: center;
@@ -229,9 +247,20 @@ footer {
     font-size: 1rem;
     letter-spacing: 0.3px;
 }
+
+/* Animaciones */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(60px);}
     to   { opacity: 1; transform: translateY(0);}
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .spotify-player iframe {
+        width: 100%;
+        min-width: 0;
+        max-width: 100vw;
+    }
 }
 @media (max-width: 700px) {
     .landing h1 {
@@ -274,6 +303,8 @@ footer {
         padding: 0.45rem 1rem;
     }
 }
+
+/* Dark Mode ajustes */
 body.dark section.tab,
 body.dark .momento-recuerdo {
     background: #30336b;
@@ -288,4 +319,13 @@ body.dark .theme-toggle {
 }
 body.dark nav li.active, body.dark nav li:hover {
     background: var(--primary);
+}
+
+/* Soporte para prefers-color-scheme automático */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: var(--bg-dark), url('Fondo.png') no-repeat center center fixed, #232946;
+        background-size: cover;
+        color: var(--text-dark);
+    }
 }
