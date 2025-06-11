@@ -18,7 +18,9 @@
         body {
             margin: 0;
             font-family: 'Montserrat', Arial, sans-serif;
-            background: var(--bg), url('Fondo.png') no-repeat center center fixed, #ffe5ec;
+            background: 
+                linear-gradient(135deg, rgba(255,229,236,0.94) 0%, rgba(184,198,219,0.92) 100%),
+                url('Fondo.png') no-repeat center center fixed;
             background-size: cover;
             color: var(--text);
             min-height: 100vh;
@@ -26,13 +28,17 @@
             overflow-x: hidden;
         }
         body.dark {
-            background: var(--bg-dark), url('Fondo.png') no-repeat center center fixed, #232946;
+            background: 
+                linear-gradient(135deg, rgba(35,41,70,0.86) 0%, rgba(76,81,198,0.74) 100%),
+                url('Fondo.png') no-repeat center center fixed;
             background-size: cover;
             color: var(--text-dark);
         }
         @media (prefers-color-scheme: dark) {
             body {
-                background: var(--bg-dark), url('Fondo.png') no-repeat center center fixed, #232946;
+                background: 
+                    linear-gradient(135deg, rgba(35,41,70,0.86) 0%, rgba(76,81,198,0.74) 100%),
+                    url('Fondo.png') no-repeat center center fixed;
                 background-size: cover;
                 color: var(--text-dark);
             }
