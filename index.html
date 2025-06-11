@@ -18,15 +18,24 @@
         body {
             margin: 0;
             font-family: 'Montserrat', Arial, sans-serif;
-            background: var(--bg);
+            background: var(--bg), url('Fondo.png') no-repeat center center fixed, #ffe5ec;
+            background-size: cover;
             color: var(--text);
             min-height: 100vh;
             transition: background 0.6s, color 0.5s;
             overflow-x: hidden;
         }
         body.dark {
-            background: var(--bg-dark);
+            background: var(--bg-dark), url('Fondo.png') no-repeat center center fixed, #232946;
+            background-size: cover;
             color: var(--text-dark);
+        }
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: var(--bg-dark), url('Fondo.png') no-repeat center center fixed, #232946;
+                background-size: cover;
+                color: var(--text-dark);
+            }
         }
         /* Shake/tremor animation */
         .shake {
@@ -98,7 +107,11 @@
             box-shadow: 0 8px 32px rgba(76, 81, 198, 0.08);
             object-fit: cover;
             background: var(--white);
-            transition: border 0.3s;
+            transition: border 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .main-photo:hover {
+            transform: scale(1.07) rotate(3deg);
+            box-shadow: 0 8px 24px rgba(255,71,126,0.15);
         }
         body.dark .main-photo {
             border: 5px solid var(--accent);
@@ -208,6 +221,8 @@
             box-shadow: 0 2px 8px #ff477e22;
             transition: transform 0.2s;
             cursor: pointer;
+            max-width: 100%;
+            height: auto;
         }
         .momento-recuerdo img:hover {
             transform: scale(1.13) rotate(-2deg);
