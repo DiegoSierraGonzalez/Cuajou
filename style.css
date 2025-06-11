@@ -15,10 +15,12 @@
     box-sizing: border-box;
 }
 
+/* Fondo bonito con imagen y gradiente */
 body {
     margin: 0;
     font-family: 'Montserrat', Arial, sans-serif;
-    background: var(--bg);
+    background: var(--bg), url('Fondo.png') no-repeat center center fixed;
+    background-size: cover;
     color: #232946;
     text-align: center;
     min-height: 100vh;
@@ -28,6 +30,7 @@ body.dark {
     background: var(--bg-dark);
     color: var(--text-dark);
 }
+/* ... Resto de tu CSS igual ... */
 .landing {
     background: linear-gradient(to bottom right, var(--primary), var(--secondary));
     padding: 30px 20px;
